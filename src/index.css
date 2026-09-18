@@ -1,0 +1,278 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-canvas: #FCF9F8;
+  --color-card: #FFFFFF;
+  --color-card-subtle: #F6F3F2;
+  --color-surface-container: #F0EDEC;
+  --color-text-primary: #1C1B1B;
+  --color-text-secondary: #444656;
+  --color-text-muted: #747688;
+  --color-border: #E5E2E1;
+  --color-border-subtle: #F0EDEC;
+  --color-accent-blue: #103FEF;
+  --color-accent-blue-hover: #002BBB;
+  --color-accent-blue-light: #DEE0FF;
+  --color-accent-bronze: #715A3E;
+  --color-accent-bronze-light: #FDDDB9;
+  --color-accent-bronze-dark: #281803;
+  --color-header-bg: rgba(252, 249, 248, 0.95);
+  --color-pill-bg: rgba(18, 18, 18, 0.92);
+  --color-pill-border: rgba(255, 255, 255, 0.15);
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.dark {
+  --color-canvas: #0B0C0E;
+  --color-card: #14161B;
+  --color-card-subtle: #1C1F26;
+  --color-surface-container: #22252E;
+  --color-text-primary: #F5F5F7;
+  --color-text-secondary: #9EA2AF;
+  --color-text-muted: #6B7082;
+  --color-border: #262933;
+  --color-border-subtle: #1A1D24;
+  --color-accent-blue: #4D76FF;
+  --color-accent-blue-hover: #6E91FF;
+  --color-accent-blue-light: #162042;
+  --color-accent-bronze: #C4A47C;
+  --color-accent-bronze-light: #2A2218;
+  --color-accent-bronze-dark: #FDDDB9;
+  --color-header-bg: rgba(11, 12, 14, 0.95);
+  --color-pill-bg: rgba(20, 22, 27, 0.95);
+  --color-pill-border: rgba(255, 255, 255, 0.18);
+}
+
+@layer base {
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}
+
+/* Haute Couture Custom Typography Classes */
+.font-display-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 5vw, 80px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.font-display-lg {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+
+.font-headline-lg {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.font-headline-sm {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.font-title-md {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0em;
+  font-weight: 500;
+}
+
+.font-body-lg {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.font-body-md {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+}
+
+.font-label-lg {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.font-label-md {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.font-label-sm {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.font-caption {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+/* Animations */
+@keyframes slideRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Scrollbar hiding utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* District Streetwear Typography & Utilities */
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-dm {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes marqueeContinuous {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeContinuous 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Indigo Artisanal Heritage Typography & Utilities */
+.font-cinzel {
+  font-family: 'Cinzel', 'Noto Serif Bengali', Georgia, serif;
+}
+
+.font-jakarta {
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Glacier Avant-Garde Luxury Utilities & Typography */
+.font-space-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.glacier-glow {
+  box-shadow: 0 0 25px rgba(125, 211, 252, 0.18);
+}
+
+.glacier-glow-lg {
+  box-shadow: 0 0 35px rgba(125, 211, 252, 0.28);
+}
+
+.glacier-glow-text {
+  text-shadow: 0 0 16px rgba(125, 211, 252, 0.45);
+}
