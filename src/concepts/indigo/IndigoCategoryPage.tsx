@@ -112,7 +112,7 @@ export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
     <div className="w-full flex flex-col pb-24 transition-colors duration-200">
       {/* Category Header Banner */}
       <section className="w-full bg-[#FFFFFF] dark:bg-[#1B1917] border-b border-[#E5DDD0] dark:border-[#36312B] py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-[11px] font-jakarta text-[#756A63] dark:text-[#A3968C] mb-3 uppercase tracking-wider">
             <button
@@ -178,7 +178,7 @@ export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
 
       {/* Sub-bar: Filter triggers and Sort */}
       <section className="sticky top-16 sm:top-20 z-20 w-full bg-[#F9F6F0]/95 dark:bg-[#121110]/95 backdrop-blur-md border-b border-[#E5DDD0] dark:border-[#36312B]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             {/* Mobile Filter Button */}
             <button
@@ -221,7 +221,7 @@ export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
       </section>
 
       {/* Main Catalog Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 pt-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Desktop Left Filter Sidebar (Col-span 3) */}
           <aside className="hidden lg:block lg:col-span-3 sticky top-36 bg-[#FFFFFF] dark:bg-[#1B1917] border border-[#E5DDD0] dark:border-[#36312B] rounded-2xl p-6 shadow-xs space-y-6">

@@ -56,7 +56,7 @@ export const IndigoHeader: React.FC<IndigoHeaderProps> = ({
       </div>
 
       {/* 2. Main Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-16 sm:h-20 flex items-center justify-between gap-4">
         {/* Mobile Left: Menu Hamburger */}
         <div className="flex items-center gap-2 lg:hidden">
           <button

@@ -71,7 +71,7 @@ export const DistrictHeader: React.FC<DistrictHeaderProps> = ({
       </div>
 
       {/* 2. Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-16 flex items-center justify-between">
         {/* Mobile Left: Menu Hamburger */}
         <div className="flex items-center lg:hidden">
           <button

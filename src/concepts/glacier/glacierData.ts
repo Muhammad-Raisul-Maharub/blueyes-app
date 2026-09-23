@@ -272,7 +272,7 @@ export const GLACIER_PRODUCTS: GlacierProduct[] = [
     images: [
       'https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&w=1200&q=85',
       'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1200&q=85',
-      'https://images.unsplash.com/photo-1471286174890-9c112ffca56a?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=1200&q=85',
     ],
   },
   {
@@ -532,7 +532,7 @@ export const GLACIER_PRODUCTS: GlacierProduct[] = [
     ],
     images: [
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85',
-      'https://images.unsplash.com/photo-1611591475839-444490089851?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=1200&q=85',
       'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=1200&q=85',
     ],
   },

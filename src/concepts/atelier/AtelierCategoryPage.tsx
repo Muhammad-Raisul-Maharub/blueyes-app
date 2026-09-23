@@ -204,7 +204,7 @@ export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] pb-24 transition-colors">
       {/* 1. Category Breadcrumb & Editorial Header */}
       <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-card)] transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-muted)] mb-3">
             <button
@@ -294,7 +294,7 @@ export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
 
       {/* 2. Controls Bar (Search + Filter Trigger + Sort) */}
       <section className="sticky top-16 z-20 w-full bg-[var(--color-header-bg)] backdrop-blur-md border-b border-[var(--color-border)] transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
           {/* Search Input */}
           <div className="relative flex-1 min-w-[200px] max-w-md">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none" />
@@ -359,7 +359,7 @@ export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
       </section>
 
       {/* 3. Catalog Layout: Desktop 4-Column Grid with Sticky Left Sidebar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
           {/* DESKTOP STICKY LEFT SIDEBAR (Col-span 3) */}
           <aside className="hidden lg:block lg:col-span-3 sticky top-32 space-y-6 bg-[var(--color-card)] border border-[var(--color-border)] p-5 shadow-sm transition-colors">

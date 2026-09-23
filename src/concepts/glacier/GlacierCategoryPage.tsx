@@ -108,7 +108,7 @@ export const GlacierCategoryPage: React.FC<GlacierCategoryPageProps> = ({
   const categoriesList: GlacierCategory[] = ['All', 'Women', 'Men', 'Kids', 'Baby', 'Accessories']
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10 pb-28">
+    <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12 relative z-10 pb-28">
       {/* 1. Breadcrumb & Title */}
       <div className="flex flex-col gap-3 mb-8">
         <button

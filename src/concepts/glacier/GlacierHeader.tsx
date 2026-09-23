@@ -41,7 +41,7 @@ export const GlacierHeader: React.FC<GlacierHeaderProps> = ({
     <header className="sticky top-0 z-40 w-full transition-colors duration-300">
       {/* 1. Sub-Zero Top Announcement Ticker */}
       <div className="w-full bg-[#020617] dark:bg-[#020617] border-b border-sky-400/20 text-[#7DD3FC] px-3 py-1.5 text-[10px] sm:text-[11px] font-space-mono tracking-widest uppercase overflow-hidden">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse shadow-[0_0_8px_#38BDF8]" />
             <div className="animate-marquee flex items-center gap-8">
@@ -68,7 +68,7 @@ export const GlacierHeader: React.FC<GlacierHeaderProps> = ({
 
       {/* 2. Frosted Glass Luxury Navigation Bar */}
       <nav className="w-full bg-white/90 dark:bg-[#030712]/75 backdrop-blur-xl border-b border-sky-200 dark:border-sky-400/20 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-18 flex items-center justify-between gap-4">
           {/* Left: Mobile Menu & Luminescent Brand Logo */}
           <div className="flex items-center gap-3 sm:gap-4">
             <button

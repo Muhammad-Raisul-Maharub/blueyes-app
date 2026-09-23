@@ -102,7 +102,7 @@ export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] font-['Public_Sans']">
       {/* Category Hero Banner */}
       <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4 text-left">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4 text-left">
           <div>
             <span className="text-xs font-bold text-[#175CD3] uppercase tracking-wider block mb-1">
               BLU EYES FAMILY // {demographic.toUpperCase()}
@@ -125,7 +125,7 @@ export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
 
       {/* Horizontal Demographic Switcher */}
       <div className="w-full bg-[var(--color-canvas)] border-b border-[var(--color-border)] px-4 sm:px-6 lg:px-8 py-3 overflow-x-auto no-scrollbar">
-        <div className="max-w-[1400px] mx-auto flex items-center space-x-2">
+        <div className="max-w-[1600px] mx-auto flex items-center space-x-2">
           {demographicOptions.map((opt) => (
             <motion.button
               key={opt.id}
@@ -149,7 +149,7 @@ export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
       </div>
 
       {/* Main Layout: Sticky Filter Sidebar (Desktop) & Responsive Grid */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Sidebar Filter (Desktop) */}
           <aside className="hidden lg:block lg:col-span-3 space-y-6 text-left">

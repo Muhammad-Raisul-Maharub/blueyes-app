@@ -247,7 +247,7 @@ export const DISTRICT_PRODUCTS: DistrictProduct[] = [
     badge: 'KIDS FAVORITE',
     stockLeft: 14,
     images: [
-      'https://images.unsplash.com/photo-1471286174890-9c112ffca56a?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=900&q=80',
     ],
     description:
@@ -472,7 +472,7 @@ export const DISTRICT_PRODUCTS: DistrictProduct[] = [
     stockLeft: 10,
     images: [
       'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1611591475819-79b8b730ab09?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=80',
     ],
     description:
       'Heavy industrial curb chain anchored by an engraved neon-anodized screw-gate carabiner clasp. Hypoallergenic, tarnish-proof, and engineered for heavy everyday wear.',

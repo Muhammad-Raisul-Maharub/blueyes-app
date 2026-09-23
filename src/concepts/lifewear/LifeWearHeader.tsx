@@ -42,7 +42,7 @@ export const LifeWearHeader: React.FC<LifeWearHeaderProps> = ({
     <header className="w-full sticky top-0 z-40 bg-[var(--color-canvas)] border-b border-[var(--color-border)] select-none">
       {/* 1. Top Logistics Notification Ticker */}
       <div className="w-full bg-[#004CE8] dark:bg-[#0039B4] text-white py-1.5 px-3 overflow-hidden text-[11px] font-mono tracking-wider">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <div className="flex items-center justify-between max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex items-center space-x-2 truncate">
             <span className="inline-block w-1.5 h-1.5 bg-white rounded-none animate-pulse" />
             <span className="font-semibold">BLU EYES LIFEWEAR</span>
@@ -60,8 +60,8 @@ export const LifeWearHeader: React.FC<LifeWearHeaderProps> = ({
       </div>
 
       {/* 2. Secondary Utility Bar: Currency & Coordinates */}
-      <div className="w-full bg-[var(--color-surface)] border-b border-[var(--color-border)] text-[11px] text-[var(--color-text-secondary)] font-mono py-1 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="w-full bg-[var(--color-surface)] border-b border-[var(--color-border)] text-[11px] text-[var(--color-text-secondary)] font-mono py-1 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <span className="text-[var(--color-text-primary)] font-medium">LOC: BD / CHATTOGRAM</span>
             <span className="opacity-40">|</span>
@@ -100,7 +100,7 @@ export const LifeWearHeader: React.FC<LifeWearHeaderProps> = ({
       </div>
 
       {/* 3. Main Brand & Navigation Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-16 flex items-center justify-between">
         {/* Mobile menu trigger */}
         <div className="flex items-center space-x-3 lg:hidden">
           <button

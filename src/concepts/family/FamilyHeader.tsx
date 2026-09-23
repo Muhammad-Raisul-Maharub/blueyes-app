@@ -42,7 +42,7 @@ export const FamilyHeader: React.FC<FamilyHeaderProps> = ({
     <header className="w-full sticky top-0 z-40 bg-[var(--color-surface)] border-b border-[var(--color-border)] select-none shadow-xs">
       {/* 1. Top Family Announcement Ticker */}
       <div className="w-full bg-[#175CD3] dark:bg-[#10439C] text-white py-1.5 px-3 overflow-hidden text-[11px] font-sans font-medium tracking-wide">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
           <div className="flex items-center space-x-2 truncate">
             <span className="inline-block w-2 h-2 bg-[#F5A623] rounded-full animate-ping" />
             <span className="font-bold">BLU EYES FAMILY</span>
@@ -62,8 +62,8 @@ export const FamilyHeader: React.FC<FamilyHeaderProps> = ({
       </div>
 
       {/* 2. Secondary Utility Bar: Currency, Loyalty Club & Theme */}
-      <div className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] py-1.5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      <div className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] text-xs text-[var(--color-text-secondary)] py-1.5 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <button
               type="button"
@@ -108,7 +108,7 @@ export const FamilyHeader: React.FC<FamilyHeaderProps> = ({
       </div>
 
       {/* 3. Main Header Navigation Strip */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-18 flex items-center justify-between">
         {/* Mobile Hamburger */}
         <div className="flex items-center space-x-3 lg:hidden">
           <button

@@ -295,7 +295,7 @@ export const INDIGO_PRODUCTS: IndigoProduct[] = [
     isFeatured: true,
     images: [
       'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1471286174890-9c112ffca564?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=900&q=80',
     ],
     description:
       "A festive 'Mini-Me' version of our classic men's panjabi, scaled with kid-friendly ergonomic collar heights and flexible elastic waist cotton pajama bottoms.",
@@ -389,7 +389,7 @@ export const INDIGO_PRODUCTS: IndigoProduct[] = [
     priceBDT: 2200,
     priceUSD: 18,
     images: [
-      'https://images.unsplash.com/photo-1471286174890-9c112ffca564?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=900&q=80',
       'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?auto=format&fit=crop&w=900&q=80',
     ],
     description:

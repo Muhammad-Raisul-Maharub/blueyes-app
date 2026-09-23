@@ -100,7 +100,7 @@ export const LIFEWEAR_PRODUCTS: LifeWearProduct[] = [
       {
         name: 'Charcoal Pin-Stripe',
         hex: '#334155',
-        image: 'https://images.unsplash.com/photo-1620012253295-c15c429f66bf?auto=format&fit=crop&w=1000&q=80',
+        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80',
       },
     ],
     sizes: ['S', 'M', 'L', 'XL'],
@@ -299,7 +299,7 @@ export const LIFEWEAR_PRODUCTS: LifeWearProduct[] = [
       {
         name: 'Matte Obsidian',
         hex: '#111827',
-        image: 'https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=1000&q=80',
+        image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80',
       },
       {
         name: 'Signal Blue',
@@ -311,7 +311,7 @@ export const LIFEWEAR_PRODUCTS: LifeWearProduct[] = [
     defaultImage: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=1000&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80',
     ],
     isNew: true,
     rating: 4.9,

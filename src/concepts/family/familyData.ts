@@ -346,7 +346,7 @@ export const FAMILY_PRODUCTS: FamilyProduct[] = [
       {
         name: 'Oatmeal Heather',
         hex: '#EADBCE',
-        image: 'https://images.unsplash.com/photo-1620012253295-c15c429f66bf?auto=format&fit=crop&w=1000&q=80',
+        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=80',
       },
     ],
     sizes: ['M', 'L', 'XL', '2XL'],

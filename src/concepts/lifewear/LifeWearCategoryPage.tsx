@@ -130,7 +130,7 @@ export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">
       {/* Category Header Banner */}
       <div className="w-full bg-[var(--color-surface)] border-b border-[var(--color-border)] py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2 text-[11px] font-mono text-[var(--color-text-secondary)] mb-1">
               <span className="uppercase">BLU EYES LIFEWEAR</span>
@@ -155,7 +155,7 @@ export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
 
       {/* Horizontal Department Switcher */}
       <div className="w-full bg-[var(--color-canvas)] border-b border-[var(--color-border)] px-4 sm:px-6 lg:px-8 py-2.5 overflow-x-auto no-scrollbar">
-        <div className="max-w-7xl mx-auto flex items-center space-x-2">
+        <div className="max-w-[1600px] mx-auto flex items-center space-x-2">
           {(['all', 'women', 'men', 'kids', 'baby', 'accessories'] as LifeWearCategory[]).map((cat) => (
             <button
               key={cat}
@@ -174,7 +174,7 @@ export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
       </div>
 
       {/* Main Content Layout: Sticky Sidebar on Desktop + 4-Col Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Desktop Left Sidebar: Sticky Filter Matrix */}
           <aside className="hidden lg:block lg:col-span-3 space-y-6">

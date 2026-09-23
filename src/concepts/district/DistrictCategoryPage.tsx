@@ -123,7 +123,7 @@ export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
     <div className="w-full min-h-screen bg-[#F4F4F6] dark:bg-[#090A0E] text-[#090A0E] dark:text-white pb-24 transition-colors duration-200">
       {/* 1. Category Header & Sector Switcher */}
       <section className="w-full border-b border-[#E2E8F0] dark:border-[#2C3142] bg-white dark:bg-[#13151D]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5] mb-2">
             <button
@@ -180,7 +180,7 @@ export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
 
       {/* 2. Controls Bar (Search + Filter Trigger + Sort) */}
       <section className="sticky top-16 z-20 w-full bg-[#F4F4F6]/95 dark:bg-[#090A0E]/95 backdrop-blur-md border-b border-[#E2E8F0] dark:border-[#2C3142]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-3 flex flex-wrap items-center justify-between gap-3">
           {/* Live Search Input */}
           <div className="relative flex-1 min-w-[200px] max-w-md">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] dark:text-[#8E95A5] pointer-events-none" />
@@ -254,7 +254,7 @@ export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
       </section>
 
       {/* 3. Catalog Layout: Desktop 4-Column Grid with Sticky Filter Sidebar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
           {/* DESKTOP STICKY LEFT SIDEBAR (Col-span 3) */}
           <aside className="hidden lg:block lg:col-span-3 sticky top-32 space-y-5 bg-white dark:bg-[#13151D] border border-[#E2E8F0] dark:border-[#2C3142] p-5 shadow-[3px_3px_0px_0px_#0047FF]">
