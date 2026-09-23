@@ -1,13 +1,33 @@
 import React from 'react'
-import { Anchor, MapPin, Zap, Globe } from 'lucide-react'
+import { Anchor, MapPin, Zap, Globe, ArrowLeft } from 'lucide-react'
 
 interface DistrictAboutProps {
   onExploreDrops: () => void
+  onBack?: () => void
 }
 
-export const DistrictAbout: React.FC<DistrictAboutProps> = ({ onExploreDrops }) => {
+export const DistrictAbout: React.FC<DistrictAboutProps> = ({ onExploreDrops, onBack }) => {
   return (
     <div className="w-full min-h-screen bg-[#F4F4F6] dark:bg-[#090A0E] text-[#090A0E] dark:text-white pb-28 animate-fadeIn transition-colors duration-200">
+      {/* Top Back Navigation Bar */}
+      {onBack && (
+        <div className="w-full bg-white dark:bg-[#13151D] border-b border-[#E2E8F0] dark:border-[#2C3142] py-2.5 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5] hover:text-[#0047FF] dark:hover:text-[#CCFF00] px-3 py-1.5 rounded bg-[#F4F4F6] dark:bg-[#1E2230] border border-[#E2E8F0] dark:border-[#2C3142] transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>RETURN TO PREVIOUS SCREEN</span>
+            </button>
+            <span className="font-mono-tech text-[10px] text-[#64748B] dark:text-[#8E95A5] uppercase tracking-widest hidden sm:inline-block">
+              PORT PROTOCOL // ABOUT
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* 1. Hero Section */}
       <section className="relative w-full bg-white dark:bg-[#13151D] border-b border-[#E2E8F0] dark:border-[#2C3142] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center text-center relative z-10">

@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react'
 import type { Product, Demographic, GarmentSize, GarmentFit } from './types'
 import { ATELIER_PRODUCTS, AUTOCOMPLETE_TAGS } from './atelierData'
-import { Search, X, SlidersHorizontal, ArrowUpDown, Filter, Check } from 'lucide-react'
+import { Search, X, SlidersHorizontal, ArrowUpDown, Filter, Check, ArrowLeft } from 'lucide-react'
 
 interface AtelierCurateProps {
   initialDemographic?: Demographic
   onSelectProduct: (product: Product) => void
+  onBack?: () => void
 }
 
 type PriceFilter = 'All' | 'under-10k' | '10k-20k' | 'over-20k'
@@ -13,6 +14,7 @@ type PriceFilter = 'All' | 'under-10k' | '10k-20k' | 'over-20k'
 export const AtelierCurate: React.FC<AtelierCurateProps> = ({
   initialDemographic = 'All',
   onSelectProduct,
+  onBack,
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDemographic, setSelectedDemographic] = useState<Demographic>(initialDemographic)
@@ -186,6 +188,19 @@ export const AtelierCurate: React.FC<AtelierCurateProps> = ({
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-28 animate-fadeIn">
+      {onBack && (
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-secondary)] hover:text-[var(--color-accent-blue)] px-2.5 py-1 rounded bg-[var(--color-card-subtle)] border border-[var(--color-border)] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Previous Screen</span>
+          </button>
+        </div>
+      )}
+
       {/* Search Header Bar */}
       <div className="bg-[var(--color-card)] border border-[var(--color-border)] p-4 sm:p-6 mb-6 shadow-sm transition-colors">
         {/* Search Input */}

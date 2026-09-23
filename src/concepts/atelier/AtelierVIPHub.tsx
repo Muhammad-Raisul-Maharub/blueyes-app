@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import type { BookingDetails } from './types'
-import { Crown, Calendar, Clock, MapPin, CheckCircle } from 'lucide-react'
+import { Crown, Calendar, Clock, MapPin, CheckCircle, ArrowLeft } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
-export const AtelierVIPHub: React.FC = () => {
+interface AtelierVIPHubProps {
+  onBack?: () => void
+}
+
+export const AtelierVIPHub: React.FC<AtelierVIPHubProps> = ({ onBack }) => {
   const [salon, setSalon] = useState<BookingDetails['salon']>('Chattogram Flagship Salon • GEC Circle')
   const [service, setService] = useState<BookingDetails['service']>('Bespoke 28-Point Fitting & Tailoring')
   const [selectedDate, setSelectedDate] = useState('2026-09-18')
@@ -25,6 +29,19 @@ export const AtelierVIPHub: React.FC = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 pb-28 animate-fadeIn">
+      {onBack && (
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-secondary)] hover:text-[var(--color-accent-blue)] px-2.5 py-1 rounded bg-[var(--color-card-subtle)] border border-[var(--color-border)] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Previous Screen</span>
+          </button>
+        </div>
+      )}
+
       {/* Header Banner */}
       <div className="pb-4 border-b border-[var(--color-border)] mb-8">
         <span className="text-[10px] font-sans uppercase tracking-[0.28em] text-[var(--color-accent-bronze)] font-semibold">

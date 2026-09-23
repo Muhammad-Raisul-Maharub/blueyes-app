@@ -5,15 +5,31 @@ import {
   MapPin,
   ThermometerSnowflake,
   Layers,
+  ArrowLeft,
 } from 'lucide-react'
 
 interface GlacierAboutProps {
   onExploreDrops: () => void
+  onBack?: () => void
 }
 
-export const GlacierAbout: React.FC<GlacierAboutProps> = ({ onExploreDrops }) => {
+export const GlacierAbout: React.FC<GlacierAboutProps> = ({ onExploreDrops, onBack }) => {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10 pb-32">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 relative z-10 pb-32">
+      {/* Top Back Navigation */}
+      {onBack && (
+        <div className="mb-8">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-[11px] font-space-mono text-slate-700 dark:text-sky-200 hover:text-[#0284C7] dark:hover:text-[#7DD3FC] px-3 py-1.5 rounded-md bg-white/60 dark:bg-white/5 border border-sky-200 dark:border-sky-400/20 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>RETURN TO PREVIOUS SCREEN</span>
+          </button>
+        </div>
+      )}
+
       {/* 1. Header Banner */}
       <div className="max-w-4xl mx-auto text-center mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-950/80 border border-sky-400/30 text-[#7DD3FC] text-[11px] font-space-mono tracking-[0.2em] uppercase mb-4 glacier-glow">

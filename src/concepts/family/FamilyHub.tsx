@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Heart, Sparkles, Gift, Calendar, Plus, Copy, Check, ArrowRight } from 'lucide-react'
+import { Heart, Sparkles, Gift, Calendar, Plus, Copy, Check, ArrowRight, ArrowLeft } from 'lucide-react'
 import type { Currency, FamilyLoyaltyChild } from './types'
 import { SEED_FAMILY_CHILDREN } from './familyData'
 
 interface FamilyHubProps {
   currency: Currency
   onNavigateCatalog: () => void
+  onBack?: () => void
 }
 
-export const FamilyHub: React.FC<FamilyHubProps> = ({ currency, onNavigateCatalog }) => {
+export const FamilyHub: React.FC<FamilyHubProps> = ({ currency, onNavigateCatalog, onBack }) => {
   const [children, setChildren] = useState<FamilyLoyaltyChild[]>(SEED_FAMILY_CHILDREN)
   const [copiedCode, setCopiedCode] = useState<string | null>(null)
   const [showAddForm, setShowAddForm] = useState(false)
@@ -46,8 +47,19 @@ export const FamilyHub: React.FC<FamilyHubProps> = ({ currency, onNavigateCatalo
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] font-['Public_Sans']">
       {/* Hub Hero Banner */}
-      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-12 px-4 sm:px-6 lg:px-8 text-left">
+      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-10 sm:py-12 px-4 sm:px-6 lg:px-8 text-left">
         <div className="max-w-[1400px] mx-auto space-y-3">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] text-xs font-bold text-[var(--color-text-primary)] hover:border-[#175CD3] cursor-pointer mb-2 shadow-2xs"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-[#175CD3]" />
+              <span>Back to Previous Screen</span>
+            </button>
+          )}
+
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#F76C5E]/15 text-[#F76C5E] text-xs font-bold uppercase">
             <Heart className="w-3.5 h-3.5 fill-[#F76C5E]" />
             <span>FAMILY PRIVILEGE & MILESTONES</span>

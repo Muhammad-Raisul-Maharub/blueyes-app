@@ -27,6 +27,10 @@ export const DistrictApp: React.FC<DistrictAppProps> = ({
   const [selectedProduct, setSelectedProduct] = useState<DistrictProduct | null>(
     DISTRICT_PRODUCTS[3] // Default: Exo-Skeleton Heavyweight Hoodie 480 GSM
   )
+  const [navHistory, setNavHistory] = useState<
+    { view: DistrictView; product?: DistrictProduct | null }[]
+  >([{ view: 'home' }])
+
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -63,23 +67,67 @@ export const DistrictApp: React.FC<DistrictAppProps> = ({
     }, 2800)
   }
 
-  // Navigation handlers
-  const handleNavigateView = (view: DistrictView) => {
+  // Navigation handlers with historical tracking
+  const handleNavigateView = (view: DistrictView, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view }])
+      try {
+        window.history.pushState({ concept: 'district', view }, '')
+      } catch {
+        // Safe fallback in restricted sandboxes
+      }
+    }
     setActiveView(view)
   }
 
-  const handleSelectProduct = (product: DistrictProduct) => {
+  const handleSelectProduct = (product: DistrictProduct, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view: 'pdp', product }])
+      try {
+        window.history.pushState({ concept: 'district', view: 'pdp', productId: product.id }, '')
+      } catch {
+        // Safe fallback
+      }
+    }
     setSelectedProduct(product)
     setActiveView('pdp')
   }
 
+  const handleGoBack = () => {
+    if (navHistory.length > 1) {
+      const updatedHistory = [...navHistory]
+      updatedHistory.pop() // Remove current active view
+      const previousEntry = updatedHistory[updatedHistory.length - 1]
+      setNavHistory(updatedHistory)
+      if (previousEntry.view === 'pdp' && previousEntry.product) {
+        setSelectedProduct(previousEntry.product)
+      }
+      setActiveView(previousEntry.view)
+    } else {
+      setActiveView('home')
+    }
+  }
+
+  // Native browser back button listener
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state && e.state.view) {
+        setActiveView(e.state.view)
+      } else {
+        handleGoBack()
+      }
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [navHistory])
+
   const handleNavigateCategory = (cat: DistrictCategory) => {
-    if (cat === 'Women') setActiveView('women')
-    else if (cat === 'Men') setActiveView('men')
-    else if (cat === 'Kids') setActiveView('kids')
-    else if (cat === 'Baby') setActiveView('baby')
-    else if (cat === 'Accessories') setActiveView('accessories')
-    else setActiveView('men')
+    if (cat === 'Women') handleNavigateView('women')
+    else if (cat === 'Men') handleNavigateView('men')
+    else if (cat === 'Kids') handleNavigateView('kids')
+    else if (cat === 'Baby') handleNavigateView('baby')
+    else if (cat === 'Accessories') handleNavigateView('accessories')
+    else handleNavigateView('men')
   }
 
   // Quick Add action from cards/tiles: adds default size & opens drawer with confirmation
@@ -238,13 +286,14 @@ export const DistrictApp: React.FC<DistrictAppProps> = ({
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
                 onQuickAdd={handleQuickAdd}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'pdp' && selectedProduct && (
               <DistrictPDP
                 product={selectedProduct}
-                onBack={() => handleNavigateView('home')}
+                onBack={handleGoBack}
                 onNavigateHome={() => handleNavigateView('home')}
                 onNavigateCategory={handleNavigateCategory}
                 onAddToBag={(prod, size, col) => handleAddToCart(prod, size, col)}
@@ -255,12 +304,14 @@ export const DistrictApp: React.FC<DistrictAppProps> = ({
               <DistrictLookbook
                 onSelectProduct={handleSelectProduct}
                 onNavigateCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'about' && (
               <DistrictAbout
                 onExploreDrops={() => handleNavigateView('men')}
+                onBack={handleGoBack}
               />
             )}
           </motion.div>

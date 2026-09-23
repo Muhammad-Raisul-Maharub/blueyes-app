@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { AtelierView, Product, CartItem, Demographic, GarmentSize } from './types'
 import { ATELIER_PRODUCTS } from './atelierData'
@@ -19,12 +19,17 @@ interface AtelierAppProps {
   onToggleTheme: () => void
 }
 
+interface AtelierHistoryEntry {
+  view: AtelierView
+  product?: Product | null
+}
+
 export const AtelierApp: React.FC<AtelierAppProps> = ({
   theme,
   onToggleTheme,
 }) => {
   const [activeView, setActiveView] = useState<AtelierView>('home')
-  const [previousView, setPreviousView] = useState<AtelierView>('home')
+  const [navHistory, setNavHistory] = useState<AtelierHistoryEntry[]>([])
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -51,29 +56,74 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
   const totalBagCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
   // Navigation handlers
-  const handleNavigateView = (view: AtelierView) => {
+  const handleNavigateView = (view: AtelierView, pushToHistory = true) => {
+    if (pushToHistory && (activeView !== view || (activeView === 'pdp' && selectedProduct))) {
+      setNavHistory((prev) => [...prev, { view: activeView, product: selectedProduct }])
+      try {
+        window.history.pushState({ view, concept: 'atelier' }, '', window.location.pathname)
+      } catch {
+        // Safe fallback in restricted environments
+      }
+    }
     setSelectedProduct(null)
-    setPreviousView(activeView)
     setActiveView(view)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleSelectProduct = (product: Product) => {
+  const handleSelectProduct = (product: Product, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view: activeView, product: selectedProduct }])
+      try {
+        window.history.pushState({ view: 'pdp', productId: product.id, concept: 'atelier' }, '', window.location.pathname)
+      } catch {
+        // Safe fallback
+      }
+    }
     setSelectedProduct(product)
-    setPreviousView(activeView)
     setActiveView('pdp')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleBackFromPDP = () => {
-    setSelectedProduct(null)
-    // Return to previous category or home
-    setActiveView(previousView || 'home')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  const handleGoBack = () => {
+    if (navHistory.length > 0) {
+      const lastEntry = navHistory[navHistory.length - 1]
+      setNavHistory((prev) => prev.slice(0, -1))
+      setSelectedProduct(lastEntry.product || null)
+      setActiveView(lastEntry.view)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      setSelectedProduct(null)
+      setActiveView('home')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
-  const handleNavigateCategory = (category: Demographic) => {
-    setSelectedProduct(null)
+  // Browser popstate listener for back/forward buttons
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (e.state && e.state.concept === 'atelier') {
+        if (e.state.view === 'pdp' && e.state.productId) {
+          const prod = ATELIER_PRODUCTS.find((p) => p.id === e.state.productId)
+          if (prod) {
+            setSelectedProduct(prod)
+            setActiveView('pdp')
+            return
+          }
+        }
+        if (e.state.view) {
+          setSelectedProduct(null)
+          setActiveView(e.state.view)
+          return
+        }
+      }
+      handleGoBack()
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [navHistory])
+
+  const handleNavigateCategory = (category: Demographic, pushToHistory = true) => {
     const categoryViewMap: Record<Demographic, AtelierView> = {
       All: 'curate',
       Women: 'women',
@@ -83,7 +133,15 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
       Accessories: 'accessories',
     }
     const target = categoryViewMap[category] || 'curate'
-    setPreviousView(activeView)
+    if (pushToHistory && (activeView !== target || selectedProduct)) {
+      setNavHistory((prev) => [...prev, { view: activeView, product: selectedProduct }])
+      try {
+        window.history.pushState({ view: target, concept: 'atelier' }, '', window.location.pathname)
+      } catch {
+        // Safe fallback
+      }
+    }
+    setSelectedProduct(null)
     setActiveView(target)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -166,7 +224,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
             {activeView === 'pdp' && selectedProduct && (
               <AtelierPDP
                 product={selectedProduct}
-                onBack={handleBackFromPDP}
+                onBack={handleGoBack}
                 onNavigateHome={() => handleNavigateView('home')}
                 onNavigateCategory={handleNavigateCategory}
                 onAddToBag={handleAddToCart}
@@ -192,6 +250,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
@@ -201,6 +260,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
@@ -210,6 +270,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
@@ -219,6 +280,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
@@ -228,12 +290,16 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
             {/* Runway Lookbook View */}
             {activeView === 'lookbook' && (
-              <AtelierRunway onSelectProduct={handleSelectProduct} />
+              <AtelierRunway
+                onSelectProduct={handleSelectProduct}
+                onBack={handleGoBack}
+              />
             )}
 
             {/* Maison Chattogram About Story & Fitting Booking */}
@@ -242,6 +308,7 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
                 onExploreCollection={(category) =>
                   handleNavigateCategory((category as Demographic) || 'Women')
                 }
+                onBack={handleGoBack}
               />
             )}
 
@@ -250,11 +317,12 @@ export const AtelierApp: React.FC<AtelierAppProps> = ({
               <AtelierCurate
                 initialDemographic="All"
                 onSelectProduct={handleSelectProduct}
+                onBack={handleGoBack}
               />
             )}
 
             {/* Obsidian VIP Club View */}
-            {activeView === 'vip' && <AtelierVIPHub />}
+            {activeView === 'vip' && <AtelierVIPHub onBack={handleGoBack} />}
           </motion.div>
         </AnimatePresence>
       </main>

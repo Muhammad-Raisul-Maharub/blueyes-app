@@ -1,18 +1,38 @@
 import React from 'react'
 import type { Language } from './types'
 import { getTranslation } from './translations'
-import { MapPin, Phone, Clock, ShieldCheck, Heart, Sparkles, Feather } from 'lucide-react'
+import { MapPin, Phone, Clock, ShieldCheck, Heart, Sparkles, Feather, ArrowLeft } from 'lucide-react'
 
 interface IndigoAboutProps {
   onExploreDrops: () => void
   language: Language
+  onBack?: () => void
 }
 
-export const IndigoAbout: React.FC<IndigoAboutProps> = ({ onExploreDrops, language }) => {
+export const IndigoAbout: React.FC<IndigoAboutProps> = ({ onExploreDrops, language, onBack }) => {
   const t = getTranslation(language)
 
   return (
     <div className="w-full flex flex-col pb-24 transition-colors duration-200">
+      {/* Top Return Navigation Bar */}
+      {onBack && (
+        <div className="w-full bg-[#FFFFFF] dark:bg-[#1B1917] border-b border-[#E5DDD0] dark:border-[#36312B] py-2.5 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 text-[11px] font-jakarta font-semibold text-[#756A63] dark:text-[#A3968C] hover:text-[#0A4269] dark:hover:text-[#3882B5] px-3 py-1.5 rounded-full bg-[#F3ECE2] dark:bg-[#25221F] border border-[#E5DDD0] dark:border-[#36312B] transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>{language === 'en' ? 'Return to Previous Screen' : 'পূর্ববর্তী পর্দায় ফিরে যান'}</span>
+            </button>
+            <span className="font-cinzel text-[11px] text-[#756A63] dark:text-[#A3968C] uppercase tracking-widest hidden sm:inline-block">
+              {language === 'en' ? 'Maison Provenance' : 'মেসন পটভূমি'}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Hero Header */}
       <section className="relative w-full bg-[#FFFFFF] dark:bg-[#1B1917] border-b border-[#E5DDD0] dark:border-[#36312B] py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center space-y-4">

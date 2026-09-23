@@ -1,17 +1,29 @@
 import React from 'react'
-import { MapPin, Compass, Factory, Truck, Package, Clock, ArrowRight } from 'lucide-react'
+import { MapPin, Compass, Factory, Truck, Package, Clock, ArrowRight, ArrowLeft } from 'lucide-react'
 import type { LifeWearCategory, LifeWearView } from './types'
 
 interface LifeWearAboutProps {
   onNavigate: (view: LifeWearView, category?: LifeWearCategory) => void
+  onBack?: () => void
 }
 
-export const LifeWearAbout: React.FC<LifeWearAboutProps> = ({ onNavigate }) => {
+export const LifeWearAbout: React.FC<LifeWearAboutProps> = ({ onNavigate, onBack }) => {
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">
       {/* Editorial Header */}
-      <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-surface)] py-14 px-4 sm:px-6 lg:px-8">
+      <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-surface)] py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-left space-y-4">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center space-x-2 text-xs font-mono text-[var(--color-text-secondary)] hover:text-[#004CE8] transition-colors cursor-pointer mb-2"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>RETURN TO PREVIOUS SCREEN</span>
+            </button>
+          )}
+
           <div className="inline-flex items-center space-x-2 border border-[var(--color-border)] bg-[var(--color-canvas)] px-2.5 py-1 text-[11px] font-mono">
             <span className="w-2 h-2 bg-[#004CE8] inline-block" />
             <span className="font-semibold text-[var(--color-text-primary)]">LIFEWEAR MANIFESTO</span>

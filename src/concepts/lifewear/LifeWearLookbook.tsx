@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowLeft } from 'lucide-react'
 import type { Currency, LifeWearCategory, LifeWearProduct, LifeWearView } from './types'
 import { LIFEWEAR_PRODUCTS } from './lifewearData'
 
@@ -7,12 +7,14 @@ interface LifeWearLookbookProps {
   currency: Currency
   onNavigate: (view: LifeWearView, category?: LifeWearCategory) => void
   onSelectProduct: (product: LifeWearProduct) => void
+  onBack?: () => void
 }
 
 export const LifeWearLookbook: React.FC<LifeWearLookbookProps> = ({
   currency,
   onNavigate,
   onSelectProduct,
+  onBack,
 }) => {
   const editorialSeries = [
     {
@@ -51,8 +53,19 @@ export const LifeWearLookbook: React.FC<LifeWearLookbookProps> = ({
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">
       {/* Header Banner */}
-      <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-surface)] py-12 px-4 sm:px-6 lg:px-8">
+      <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-surface)] py-10 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-left space-y-3">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center space-x-2 text-xs font-mono text-[var(--color-text-secondary)] hover:text-[#004CE8] transition-colors cursor-pointer mb-2"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>RETURN TO PREVIOUS SCREEN</span>
+            </button>
+          )}
+
           <div className="flex items-center space-x-2 text-xs font-mono text-[var(--color-text-secondary)]">
             <span>EDITORIAL SPEC</span>
             <span>/</span>

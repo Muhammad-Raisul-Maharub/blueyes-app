@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type {
   Currency,
@@ -37,6 +37,9 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
   const [searchOpen, setSearchOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [navHistory, setNavHistory] = useState<
+    Array<{ view: FamilyView; demographic: FamilyDemographic; product: FamilyProduct }>
+  >([])
 
   // Seeded cart with initial family items
   const [cart, setCart] = useState<FamilyCartItem[]>([
@@ -67,8 +70,19 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
     }, 2500)
   }
 
-  // Navigation handlers
+  // Navigation handlers with history tracking
   const handleNavigate = (view: FamilyView, demographic?: FamilyDemographic) => {
+    if (view !== currentView || (demographic && demographic !== selectedDemographic)) {
+      setNavHistory((prev) => [
+        ...prev,
+        { view: currentView, demographic: selectedDemographic, product: selectedProduct },
+      ])
+      try {
+        window.history.pushState({ concept: 'family', view, demographic }, '')
+      } catch {
+        // Safe fallback
+      }
+    }
     setCurrentView(view)
     if (demographic) {
       setSelectedDemographic(demographic)
@@ -77,10 +91,49 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
   }
 
   const handleSelectProduct = (product: FamilyProduct) => {
+    setNavHistory((prev) => [
+      ...prev,
+      { view: currentView, demographic: selectedDemographic, product: selectedProduct },
+    ])
+    try {
+      window.history.pushState({ concept: 'family', view: 'pdp', productId: product.id }, '')
+    } catch {
+      // Safe fallback
+    }
     setSelectedProduct(product)
     setCurrentView('pdp')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const handleGoBack = () => {
+    if (navHistory.length > 0) {
+      const prevEntry = navHistory[navHistory.length - 1]
+      setNavHistory((prev) => prev.slice(0, -1))
+      setCurrentView(prevEntry.view)
+      setSelectedDemographic(prevEntry.demographic)
+      setSelectedProduct(prevEntry.product)
+    } else {
+      setCurrentView('home')
+      setSelectedDemographic('all')
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    const onPopState = () => {
+      if (navHistory.length > 0) {
+        const prevEntry = navHistory[navHistory.length - 1]
+        setNavHistory((prev) => prev.slice(0, -1))
+        setCurrentView(prevEntry.view)
+        setSelectedDemographic(prevEntry.demographic)
+        setSelectedProduct(prevEntry.product)
+      } else {
+        setCurrentView('home')
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [navHistory])
 
   // Cart Operations
   const handleAddToCart = (
@@ -208,6 +261,8 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
                 currency={currency}
                 onSelectProduct={handleSelectProduct}
                 onQuickAdd={handleQuickAdd}
+                onBack={handleGoBack}
+                onNavigateHome={() => handleNavigate('home', 'all')}
               />
             )}
 
@@ -215,7 +270,7 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
               <FamilyPDP
                 product={selectedProduct}
                 currency={currency}
-                onBack={() => handleNavigate('category', selectedProduct.demographic)}
+                onBack={handleGoBack}
                 onAddToCart={handleAddToCart}
               />
             )}
@@ -224,11 +279,12 @@ export const FamilyApp: React.FC<FamilyAppProps> = ({ theme, onToggleTheme }) =>
               <FamilyHub
                 currency={currency}
                 onNavigateCatalog={() => handleNavigate('category', 'all')}
+                onBack={handleGoBack}
               />
             )}
 
             {currentView === 'about' && (
-              <FamilyAbout onNavigate={handleNavigate} />
+              <FamilyAbout onNavigate={handleNavigate} onBack={handleGoBack} />
             )}
           </motion.div>
         </AnimatePresence>

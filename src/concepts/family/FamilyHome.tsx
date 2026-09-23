@@ -10,6 +10,7 @@ import {
   Star,
   Users,
   Baby,
+  ArrowRight,
 } from 'lucide-react'
 import type { Currency, FamilyDemographic, FamilyProduct, FamilyView } from './types'
 import { FAMILY_PRODUCTS } from './familyData'
@@ -24,7 +25,7 @@ interface FamilyHomeProps {
 
 export const FamilyHome: React.FC<FamilyHomeProps> = ({
   currency,
-  onNavigate: _onNavigate,
+  onNavigate,
   onSelectProduct,
   onQuickAdd,
   onAddFamilyBundleToCart,
@@ -529,41 +530,71 @@ export const FamilyHome: React.FC<FamilyHomeProps> = ({
           ========================================================================= */}
       <section className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#175CD3]/10 flex items-center justify-center text-[#175CD3]">
+          <motion.div
+            whileHover={{ y: -4 }}
+            onClick={() => onNavigate('about')}
+            className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[#175CD3]/40 transition-all cursor-pointer space-y-3 group"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#175CD3]/10 flex items-center justify-center text-[#175CD3] group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit']">
-              Non-Toxic Baby-Safe Dyes
-            </h4>
-            <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-              Every yarn is certified OEKO-TEX Standard 100 Class 1. Zero harmful phthalates, zero lead, and hypoallergenic for delicate newborn skin.
-            </p>
-          </div>
+            <div>
+              <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit'] group-hover:text-[#175CD3] transition-colors">
+                Non-Toxic Baby-Safe Dyes
+              </h4>
+              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mt-1">
+                Every yarn is certified OEKO-TEX Standard 100 Class 1. Zero harmful phthalates, zero lead, and hypoallergenic for delicate newborn skin.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#175CD3] pt-1">
+              <span>Read Safety Standards</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </motion.div>
 
-          <div className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#F76C5E]/10 flex items-center justify-center text-[#F76C5E]">
+          <motion.div
+            whileHover={{ y: -4 }}
+            onClick={() => onNavigate('hub')}
+            className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[#F76C5E]/40 transition-all cursor-pointer space-y-3 group"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#F76C5E]/10 flex items-center justify-center text-[#F76C5E] group-hover:scale-110 transition-transform">
               <Gift className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit']">
-              Pastel Baby Shower Keepsake Boxes
-            </h4>
-            <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-              Add our bespoke celebration box in pastel peach or sky blue with personalized handwritten welcome cards for loved ones.
-            </p>
-          </div>
+            <div>
+              <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit'] group-hover:text-[#F76C5E] transition-colors">
+                Pastel Baby Shower Keepsake Boxes
+              </h4>
+              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mt-1">
+                Add our bespoke celebration box in pastel peach or sky blue with personalized handwritten welcome cards for loved ones.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#F76C5E] pt-1">
+              <span>Explore Keepsake Registry</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </motion.div>
 
-          <div className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#F5A623]/20 flex items-center justify-center text-[#F5A623]">
+          <motion.div
+            whileHover={{ y: -4 }}
+            onClick={() => onNavigate('hub')}
+            className="p-6 rounded-3xl bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[#F5A623]/40 transition-all cursor-pointer space-y-3 group"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#F5A623]/20 flex items-center justify-center text-[#F5A623] group-hover:scale-110 transition-transform">
               <Heart className="w-5 h-5 fill-[#F5A623]" />
             </div>
-            <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit']">
-              20% Birthday Milestone Vouchers
-            </h4>
-            <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-              Register your children’s birthdays in our Family Hub and automatically receive 20% privilege vouchers every milestone year.
-            </p>
-          </div>
+            <div>
+              <h4 className="font-bold text-base text-[var(--color-text-primary)] font-['Outfit'] group-hover:text-[#F5A623] transition-colors">
+                20% Birthday Milestone Vouchers
+              </h4>
+              <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed mt-1">
+                Register your children’s birthdays in our Family Hub and automatically receive 20% privilege vouchers every milestone year.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#b5730a] dark:text-[#FDB843] pt-1">
+              <span>Register In Family Hub</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { MapPin, CheckCircle, ShieldCheck, Compass, Anchor } from 'lucide-react'
+import { MapPin, CheckCircle, ShieldCheck, Compass, Anchor, ArrowLeft } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import type { BookingDetails } from './types'
 
 interface AtelierAboutProps {
   onExploreCollection: (category?: string) => void
+  onBack?: () => void
 }
 
-export const AtelierAbout: React.FC<AtelierAboutProps> = ({ onExploreCollection }) => {
+export const AtelierAbout: React.FC<AtelierAboutProps> = ({ onExploreCollection, onBack }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSalon, setSelectedSalon] = useState<BookingDetails['salon']>(
     'Chattogram Flagship Salon • GEC Circle'
@@ -39,6 +40,21 @@ export const AtelierAbout: React.FC<AtelierAboutProps> = ({ onExploreCollection 
 
   return (
     <div className="w-full flex flex-col pb-28 animate-fadeIn text-[var(--color-text-primary)]">
+      {onBack && (
+        <div className="w-full bg-[#0B0C0E] border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3">
+          <div className="max-w-[1400px] mx-auto flex items-center">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-2 text-[11px] font-sans uppercase tracking-[0.2em] text-[#FDDDB9] hover:text-white transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Return to Previous Screen</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 1. Hero: Maritime Heritage Meets Haute Tailoring */}
       <section className="relative w-full bg-[#0B0C0E] text-white py-20 sm:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-[var(--color-border)]">
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#C4A47C_1px,transparent_1px)] [background-size:20px_20px]" />

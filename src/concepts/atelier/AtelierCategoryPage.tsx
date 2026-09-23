@@ -10,6 +10,7 @@ import {
   ChevronDown,
   RotateCcw,
   Sparkles,
+  ArrowLeft,
 } from 'lucide-react'
 
 interface AtelierCategoryPageProps {
@@ -17,6 +18,7 @@ interface AtelierCategoryPageProps {
   onSelectProduct: (product: Product) => void
   onNavigateHome: () => void
   onSelectCategory: (category: Demographic) => void
+  onBack?: () => void
 }
 
 export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
@@ -24,6 +26,7 @@ export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
   onSelectProduct,
   onNavigateHome,
   onSelectCategory,
+  onBack,
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedSilhouette, setSelectedSilhouette] = useState<string>('All')
@@ -205,18 +208,30 @@ export const AtelierCategoryPage: React.FC<AtelierCategoryPageProps> = ({
       {/* 1. Category Breadcrumb & Editorial Header */}
       <section className="w-full border-b border-[var(--color-border)] bg-[var(--color-card)] transition-colors">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-muted)] mb-3">
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="hover:text-[var(--color-accent-blue)] transition-colors cursor-pointer"
-            >
-              Maison Home
-            </button>
-            <span>/</span>
-            <span className="text-[var(--color-text-primary)] font-semibold">{category}</span>
-          </nav>
+          {/* Breadcrumb & Back Button */}
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
+            {onBack && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="inline-flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-secondary)] hover:text-[var(--color-accent-blue)] px-2.5 py-1 rounded bg-[var(--color-card-subtle)] border border-[var(--color-border)] transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Back</span>
+              </button>
+            )}
+            <nav className="flex items-center gap-2 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-muted)]">
+              <button
+                type="button"
+                onClick={onNavigateHome}
+                className="hover:text-[var(--color-accent-blue)] transition-colors cursor-pointer"
+              >
+                Maison Home
+              </button>
+              <span>/</span>
+              <span className="text-[var(--color-text-primary)] font-semibold">{category}</span>
+            </nav>
+          </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>

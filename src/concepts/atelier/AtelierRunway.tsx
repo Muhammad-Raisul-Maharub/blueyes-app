@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import type { Product } from './types'
 import { ATELIER_PRODUCTS } from './atelierData'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight, Play, ArrowLeft } from 'lucide-react'
 
 interface AtelierRunwayProps {
   onSelectProduct: (product: Product) => void
+  onBack?: () => void
 }
 
-export const AtelierRunway: React.FC<AtelierRunwayProps> = ({ onSelectProduct }) => {
+export const AtelierRunway: React.FC<AtelierRunwayProps> = ({ onSelectProduct, onBack }) => {
   const [activeLookIndex, setActiveLookIndex] = useState(0)
 
   const runwayLooks = [
@@ -44,6 +45,19 @@ export const AtelierRunway: React.FC<AtelierRunwayProps> = ({ onSelectProduct })
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 pb-28 animate-fadeIn">
+      {onBack && (
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-[0.18em] text-[var(--color-text-secondary)] hover:text-[var(--color-accent-blue)] px-2.5 py-1 rounded bg-[var(--color-card-subtle)] border border-[var(--color-border)] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Previous Screen</span>
+          </button>
+        </div>
+      )}
+
       {/* Runway Header */}
       <div className="pb-4 border-b border-[var(--color-border)] mb-6">
         <span className="text-[10px] font-sans uppercase tracking-[0.26em] text-[var(--color-accent-blue)] font-semibold">

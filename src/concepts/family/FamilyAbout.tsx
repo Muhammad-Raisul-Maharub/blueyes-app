@@ -1,17 +1,29 @@
 import React from 'react'
-import { MapPin, Heart, ShieldCheck, Factory, Truck, Clock, ArrowRight } from 'lucide-react'
+import { MapPin, Heart, ShieldCheck, Factory, Truck, Clock, ArrowRight, ArrowLeft } from 'lucide-react'
 import type { FamilyDemographic, FamilyView } from './types'
 
 interface FamilyAboutProps {
   onNavigate: (view: FamilyView, demographic?: FamilyDemographic) => void
+  onBack?: () => void
 }
 
-export const FamilyAbout: React.FC<FamilyAboutProps> = ({ onNavigate }) => {
+export const FamilyAbout: React.FC<FamilyAboutProps> = ({ onNavigate, onBack }) => {
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] font-['Public_Sans']">
       {/* Editorial Header */}
-      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-14 px-4 sm:px-6 lg:px-8 text-left">
+      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-10 sm:py-14 px-4 sm:px-6 lg:px-8 text-left">
         <div className="max-w-[1400px] mx-auto space-y-4">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] text-xs font-bold text-[var(--color-text-primary)] hover:border-[#175CD3] cursor-pointer mb-2 shadow-2xs"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-[#175CD3]" />
+              <span>Back to Previous Screen</span>
+            </button>
+          )}
+
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#175CD3]/10 text-[#175CD3] text-xs font-bold uppercase">
             <Heart className="w-3.5 h-3.5 text-[#F76C5E] fill-[#F76C5E]" />
             <span>OUR MULTI-GENERATIONAL MANIFESTO</span>

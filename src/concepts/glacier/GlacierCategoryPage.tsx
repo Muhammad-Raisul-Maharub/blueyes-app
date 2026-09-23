@@ -10,6 +10,7 @@ interface GlacierCategoryPageProps {
   onSelectCategory: (cat: GlacierCategory) => void
   onQuickAdd: (product: GlacierProduct) => void
   currency: Currency
+  onBack?: () => void
 }
 
 export const GlacierCategoryPage: React.FC<GlacierCategoryPageProps> = ({
@@ -19,6 +20,7 @@ export const GlacierCategoryPage: React.FC<GlacierCategoryPageProps> = ({
   onSelectCategory,
   onQuickAdd,
   currency,
+  onBack,
 }) => {
   // Filter state
   const [selectedFiber, setSelectedFiber] = useState<string>('All')
@@ -111,14 +113,25 @@ export const GlacierCategoryPage: React.FC<GlacierCategoryPageProps> = ({
     <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12 relative z-10 pb-28">
       {/* 1. Breadcrumb & Title */}
       <div className="flex flex-col gap-3 mb-8">
-        <button
-          type="button"
-          onClick={onNavigateHome}
-          className="inline-flex items-center gap-1.5 text-[11px] font-space-mono text-slate-500 dark:text-sky-300/70 hover:text-[#0284C7] dark:hover:text-[#7DD3FC] transition-colors w-fit cursor-pointer"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>RETURN TO GLACIER HUB</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 text-[11px] font-space-mono text-slate-700 dark:text-sky-200 hover:text-[#0284C7] dark:hover:text-[#7DD3FC] px-3 py-1 rounded bg-white/60 dark:bg-white/5 border border-sky-200 dark:border-sky-400/20 transition-colors w-fit cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>BACK</span>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onNavigateHome}
+            className="inline-flex items-center gap-1.5 text-[11px] font-space-mono text-slate-500 dark:text-sky-300/70 hover:text-[#0284C7] dark:hover:text-[#7DD3FC] transition-colors w-fit cursor-pointer"
+          >
+            <span>GLACIER HUB</span>
+          </button>
+        </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-sky-200 dark:border-sky-400/20 pb-6">
           <div>

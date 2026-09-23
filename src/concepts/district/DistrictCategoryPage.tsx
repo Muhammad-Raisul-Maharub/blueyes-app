@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import type { DistrictProduct, DistrictCategory } from './types'
 import { DISTRICT_PRODUCTS } from './districtData'
-import { Search, SlidersHorizontal, X, RotateCcw, ChevronDown } from 'lucide-react'
+import { Search, SlidersHorizontal, X, RotateCcw, ChevronDown, ArrowLeft } from 'lucide-react'
 
 interface DistrictCategoryPageProps {
   category: DistrictCategory
@@ -9,6 +9,7 @@ interface DistrictCategoryPageProps {
   onNavigateHome: () => void
   onSelectCategory: (category: DistrictCategory) => void
   onQuickAdd: (product: DistrictProduct) => void
+  onBack?: () => void
 }
 
 export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
@@ -17,6 +18,7 @@ export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
   onNavigateHome,
   onSelectCategory,
   onQuickAdd,
+  onBack,
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedFit, setSelectedFit] = useState<string>('All')
@@ -124,17 +126,29 @@ export const DistrictCategoryPage: React.FC<DistrictCategoryPageProps> = ({
       {/* 1. Category Header & Sector Switcher */}
       <section className="w-full border-b border-[#E2E8F0] dark:border-[#2C3142] bg-white dark:bg-[#13151D]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5] mb-2">
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="hover:text-[#0047FF] dark:hover:text-[#CCFF00] transition-colors cursor-pointer"
-            >
-              DISTRICT
-            </button>
-            <span>//</span>
-            <span className="text-[#0047FF] dark:text-[#CCFF00] font-bold">{category} SECTOR</span>
+          {/* Breadcrumb & Back Button */}
+          <div className="flex items-center gap-3 mb-2 flex-wrap">
+            {onBack && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="inline-flex items-center gap-1.5 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5] hover:text-[#0047FF] dark:hover:text-[#CCFF00] px-2.5 py-1 rounded bg-[#F4F4F6] dark:bg-[#1E2230] border border-[#E2E8F0] dark:border-[#2C3142] transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>BACK</span>
+              </button>
+            )}
+            <div className="flex items-center gap-2 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5]">
+              <button
+                type="button"
+                onClick={onNavigateHome}
+                className="hover:text-[#0047FF] dark:hover:text-[#CCFF00] transition-colors cursor-pointer"
+              >
+                DISTRICT
+              </button>
+              <span>//</span>
+              <span className="text-[#0047FF] dark:text-[#CCFF00] font-bold">{category} SECTOR</span>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">

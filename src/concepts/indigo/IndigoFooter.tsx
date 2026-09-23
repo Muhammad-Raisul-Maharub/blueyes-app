@@ -36,10 +36,14 @@ export const IndigoFooter: React.FC<IndigoFooterProps> = ({
               {t.footer.guildText}
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F3ECE2] dark:bg-[#25221F] border border-[#E5DDD0] dark:border-[#36312B] rounded-xl text-[11px] font-jakarta font-semibold text-[#0A4269] dark:text-[#3882B5]">
+            <button
+              type="button"
+              onClick={() => onNavigateView('about')}
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F3ECE2] dark:bg-[#25221F] border border-[#E5DDD0] dark:border-[#36312B] hover:border-[#0A4269] dark:hover:border-[#3882B5] rounded-xl text-[11px] font-jakarta font-semibold text-[#0A4269] dark:text-[#3882B5] transition-colors cursor-pointer text-left"
+            >
               <ShieldCheck className="w-4 h-4 text-[#B85324]" />
               <span>{language === 'en' ? 'Natural Botanical Dyes Guaranteed' : 'শতভাগ প্রাকৃতিক ভেষজ নীল'}</span>
-            </div>
+            </button>
           </div>
 
           {/* Department Directory (Col-span 3) */}
@@ -48,6 +52,15 @@ export const IndigoFooter: React.FC<IndigoFooterProps> = ({
               {language === 'en' ? 'Artisanal Collections' : 'তাঁত সংগ্রহ'}
             </h4>
             <ul className="space-y-2 text-[13px] font-jakarta text-[#756A63] dark:text-[#A3968C]">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigateView('about')}
+                  className="hover:text-[#0A4269] dark:hover:text-[#3882B5] transition-colors cursor-pointer text-left font-medium"
+                >
+                  {language === 'en' ? 'Maison Heritage & Looms' : 'মেসন ঐতিহ্য ও কারিগর'}
+                </button>
+              </li>
               <li>
                 <button
                   type="button"

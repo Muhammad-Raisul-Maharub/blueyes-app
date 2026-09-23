@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import type { IndigoProduct, IndigoCategory, Language } from './types'
 import { getTranslation } from './translations'
 import { INDIGO_PRODUCTS } from './indigoData'
-import { Filter, X, ChevronDown, Feather, Check, Sparkles } from 'lucide-react'
+import { Filter, X, ChevronDown, Feather, Check, Sparkles, ArrowLeft } from 'lucide-react'
 
 interface IndigoCategoryPageProps {
   category: IndigoCategory | 'All'
@@ -11,6 +11,7 @@ interface IndigoCategoryPageProps {
   onSelectCategory: (category: IndigoCategory) => void
   onQuickAdd: (product: IndigoProduct) => void
   language: Language
+  onBack?: () => void
 }
 
 export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
@@ -20,6 +21,7 @@ export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
   onSelectCategory,
   onQuickAdd,
   language,
+  onBack,
 }) => {
   const t = getTranslation(language)
 
@@ -113,24 +115,36 @@ export const IndigoCategoryPage: React.FC<IndigoCategoryPageProps> = ({
       {/* Category Header Banner */}
       <section className="w-full bg-[#FFFFFF] dark:bg-[#1B1917] border-b border-[#E5DDD0] dark:border-[#36312B] py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-[11px] font-jakarta text-[#756A63] dark:text-[#A3968C] mb-3 uppercase tracking-wider">
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="hover:text-[#0A4269] dark:hover:text-[#3882B5] cursor-pointer"
-            >
-              {language === 'en' ? 'Maison Chattogram' : 'মেসন চট্টগ্রাম'}
-            </button>
-            <span>/</span>
-            <span className="text-[#0A4269] dark:text-[#3882B5] font-bold">
-              {category === 'All'
-                ? language === 'en'
-                  ? 'All Master Weaves'
-                  : 'সকল তাঁত সংগ্রহ'
-                : t.nav[category.toLowerCase() as keyof typeof t.nav] || category}
-            </span>
-          </nav>
+          {/* Breadcrumbs & Back Button */}
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
+            {onBack && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="inline-flex items-center gap-1.5 text-[11px] font-jakarta font-semibold text-[#756A63] dark:text-[#A3968C] hover:text-[#0A4269] dark:hover:text-[#3882B5] px-2.5 py-1 rounded-full bg-[#F3ECE2] dark:bg-[#25221F] border border-[#E5DDD0] dark:border-[#36312B] transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>{language === 'en' ? 'Back' : 'পূর্ববর্তী'}</span>
+              </button>
+            )}
+            <nav className="flex items-center gap-2 text-[11px] font-jakarta text-[#756A63] dark:text-[#A3968C] uppercase tracking-wider">
+              <button
+                type="button"
+                onClick={onNavigateHome}
+                className="hover:text-[#0A4269] dark:hover:text-[#3882B5] cursor-pointer"
+              >
+                {language === 'en' ? 'Maison Chattogram' : 'মেসন চট্টগ্রাম'}
+              </button>
+              <span>/</span>
+              <span className="text-[#0A4269] dark:text-[#3882B5] font-bold">
+                {category === 'All'
+                  ? language === 'en'
+                    ? 'All Master Weaves'
+                    : 'সকল তাঁত সংগ্রহ'
+                  : t.nav[category.toLowerCase() as keyof typeof t.nav] || category}
+              </span>
+            </nav>
+          </div>
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>

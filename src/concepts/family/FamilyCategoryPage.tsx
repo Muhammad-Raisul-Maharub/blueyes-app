@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Filter, X, Check, SlidersHorizontal } from 'lucide-react'
+import { Filter, X, Check, SlidersHorizontal, ArrowLeft } from 'lucide-react'
 import type { Currency, FamilyDemographic, FamilyAgeBracket, FamilyProduct } from './types'
 import { FAMILY_PRODUCTS } from './familyData'
 
@@ -10,6 +10,8 @@ interface FamilyCategoryPageProps {
   currency: Currency
   onSelectProduct: (product: FamilyProduct) => void
   onQuickAdd: (product: FamilyProduct) => void
+  onBack?: () => void
+  onNavigateHome?: () => void
 }
 
 export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
@@ -18,6 +20,8 @@ export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
   currency,
   onSelectProduct,
   onQuickAdd,
+  onBack,
+  onNavigateHome,
 }) => {
   const [selectedAgeBracket, setSelectedAgeBracket] = useState<FamilyAgeBracket>('all')
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
@@ -101,12 +105,34 @@ export const FamilyCategoryPage: React.FC<FamilyCategoryPageProps> = ({
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] font-['Public_Sans']">
       {/* Category Hero Banner */}
-      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-8 px-4 sm:px-6 lg:px-8">
+      <section className="w-full bg-[var(--color-surface-soft)] border-b border-[var(--color-border)] py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4 text-left">
           <div>
-            <span className="text-xs font-bold text-[#175CD3] uppercase tracking-wider block mb-1">
-              BLU EYES FAMILY // {demographic.toUpperCase()}
-            </span>
+            <div className="flex items-center space-x-2 text-xs font-bold text-[#175CD3] mb-2">
+              {onBack && (
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] text-xs font-bold text-[var(--color-text-primary)] hover:border-[#175CD3] cursor-pointer mr-2 shadow-2xs"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 text-[#175CD3]" />
+                  <span>Back</span>
+                </button>
+              )}
+              {onNavigateHome ? (
+                <button
+                  type="button"
+                  onClick={onNavigateHome}
+                  className="hover:underline uppercase tracking-wider cursor-pointer"
+                >
+                  BLU EYES FAMILY
+                </button>
+              ) : (
+                <span className="uppercase tracking-wider">BLU EYES FAMILY</span>
+              )}
+              <span>//</span>
+              <span className="uppercase tracking-wider text-[var(--color-text-secondary)]">{demographic}</span>
+            </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-[var(--color-text-primary)] font-['Outfit']">
               {currentInfo.title}
             </h1>

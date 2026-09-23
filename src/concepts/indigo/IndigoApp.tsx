@@ -42,6 +42,10 @@ export const IndigoApp: React.FC<IndigoAppProps> = ({
   const [selectedProduct, setSelectedProduct] = useState<IndigoProduct | null>(
     INDIGO_PRODUCTS[0] // Default: Hand-Woven Tangail Indigo Jamdani Saree
   )
+  const [navHistory, setNavHistory] = useState<
+    { view: IndigoView; product?: IndigoProduct | null }[]
+  >([{ view: 'home' }])
+
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -96,23 +100,67 @@ export const IndigoApp: React.FC<IndigoAppProps> = ({
     })
   }
 
-  // Navigation handlers
-  const handleNavigateView = (view: IndigoView) => {
+  // Navigation handlers with historical tracking
+  const handleNavigateView = (view: IndigoView, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view }])
+      try {
+        window.history.pushState({ concept: 'indigo', view }, '')
+      } catch {
+        // Fallback for sandboxes
+      }
+    }
     setActiveView(view)
   }
 
-  const handleSelectProduct = (product: IndigoProduct) => {
+  const handleSelectProduct = (product: IndigoProduct, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view: 'pdp', product }])
+      try {
+        window.history.pushState({ concept: 'indigo', view: 'pdp', productId: product.id }, '')
+      } catch {
+        // Fallback
+      }
+    }
     setSelectedProduct(product)
     setActiveView('pdp')
   }
 
+  const handleGoBack = () => {
+    if (navHistory.length > 1) {
+      const updated = [...navHistory]
+      updated.pop()
+      const prevEntry = updated[updated.length - 1]
+      setNavHistory(updated)
+      if (prevEntry.view === 'pdp' && prevEntry.product) {
+        setSelectedProduct(prevEntry.product)
+      }
+      setActiveView(prevEntry.view)
+    } else {
+      setActiveView('home')
+    }
+  }
+
+  // Native browser back button listener
+  useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      if (e.state && e.state.view) {
+        setActiveView(e.state.view)
+      } else {
+        handleGoBack()
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [navHistory])
+
   const handleNavigateCategory = (cat: IndigoCategory) => {
-    if (cat === 'Women') setActiveView('women')
-    else if (cat === 'Men') setActiveView('men')
-    else if (cat === 'Kids') setActiveView('kids')
-    else if (cat === 'Baby') setActiveView('baby')
-    else if (cat === 'Accessories') setActiveView('accessories')
-    else setActiveView('women')
+    if (cat === 'Women') handleNavigateView('women')
+    else if (cat === 'Men') handleNavigateView('men')
+    else if (cat === 'Kids') handleNavigateView('kids')
+    else if (cat === 'Baby') handleNavigateView('baby')
+    else if (cat === 'Accessories') handleNavigateView('accessories')
+    else handleNavigateView('women')
   }
 
   // Quick Add action from product cards & pods
@@ -259,8 +307,8 @@ export const IndigoApp: React.FC<IndigoAppProps> = ({
               <IndigoHome
                 onSelectProduct={handleSelectProduct}
                 onNavigateCategory={handleNavigateCategory}
-                onNavigateLookbook={() => setActiveView('lookbook')}
-                onNavigateAbout={() => setActiveView('about')}
+                onNavigateLookbook={() => handleNavigateView('lookbook')}
+                onNavigateAbout={() => handleNavigateView('about')}
                 onQuickAdd={handleQuickAdd}
                 language={language}
               />
@@ -274,18 +322,19 @@ export const IndigoApp: React.FC<IndigoAppProps> = ({
               <IndigoCategoryPage
                 category={currentCategory}
                 onSelectProduct={handleSelectProduct}
-                onNavigateHome={() => setActiveView('home')}
+                onNavigateHome={() => handleNavigateView('home')}
                 onSelectCategory={handleNavigateCategory}
                 onQuickAdd={handleQuickAdd}
                 language={language}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'pdp' && selectedProduct && (
               <IndigoPDP
                 product={selectedProduct}
-                onBack={() => setActiveView('home')}
-                onNavigateHome={() => setActiveView('home')}
+                onBack={handleGoBack}
+                onNavigateHome={() => handleNavigateView('home')}
                 onNavigateCategory={handleNavigateCategory}
                 onAddToBag={handleAddToCart}
                 language={language}
@@ -297,13 +346,15 @@ export const IndigoApp: React.FC<IndigoAppProps> = ({
                 onSelectProduct={handleSelectProduct}
                 onNavigateCategory={handleNavigateCategory}
                 language={language}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'about' && (
               <IndigoAbout
-                onExploreDrops={() => setActiveView('women')}
+                onExploreDrops={() => handleNavigateView('women')}
                 language={language}
+                onBack={handleGoBack}
               />
             )}
           </motion.div>

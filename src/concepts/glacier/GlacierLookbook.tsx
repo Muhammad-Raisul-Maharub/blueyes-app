@@ -1,16 +1,18 @@
 import React from 'react'
-import { ArrowUpRight, Camera } from 'lucide-react'
+import { ArrowUpRight, Camera, ArrowLeft } from 'lucide-react'
 import type { GlacierProduct, GlacierCategory } from './types'
 import { GLACIER_PRODUCTS } from './glacierData'
 
 interface GlacierLookbookProps {
   onSelectProduct: (product: GlacierProduct) => void
   onNavigateCategory?: (category: GlacierCategory) => void
+  onBack?: () => void
 }
 
 export const GlacierLookbook: React.FC<GlacierLookbookProps> = ({
   onSelectProduct,
   onNavigateCategory,
+  onBack,
 }) => {
   const editorialLooks = [
     {
@@ -76,7 +78,21 @@ export const GlacierLookbook: React.FC<GlacierLookbookProps> = ({
   ]
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 relative z-10 pb-32">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 relative z-10 pb-32">
+      {/* Top Back Navigation */}
+      {onBack && (
+        <div className="mb-6">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-1.5 text-[11px] font-space-mono text-slate-700 dark:text-sky-200 hover:text-[#0284C7] dark:hover:text-[#7DD3FC] px-3 py-1.5 rounded-md bg-white/60 dark:bg-white/5 border border-sky-200 dark:border-sky-400/20 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>RETURN TO PREVIOUS SCREEN</span>
+          </button>
+        </div>
+      )}
+
       {/* 1. Lookbook Title Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-sky-400/20 pb-8 mb-12">
         <div>

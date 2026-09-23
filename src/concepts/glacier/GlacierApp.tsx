@@ -31,6 +31,10 @@ export const GlacierApp: React.FC<GlacierAppProps> = ({ theme, onToggleTheme }) 
   const [selectedProduct, setSelectedProduct] = useState<GlacierProduct>(
     GLACIER_PRODUCTS[0] // Sculptural Hydro-Silk Evening Cape Gown
   )
+  const [navHistory, setNavHistory] = useState<
+    { view: GlacierView; product?: GlacierProduct | null }[]
+  >([{ view: 'home' }])
+
   const [currency, setCurrency] = useState<Currency>('BDT')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -71,23 +75,67 @@ export const GlacierApp: React.FC<GlacierAppProps> = ({ theme, onToggleTheme }) 
     setCurrency((prev) => (prev === 'BDT' ? 'USD' : 'BDT'))
   }
 
-  // Navigation handlers
-  const handleNavigateView = (view: GlacierView) => {
+  // Navigation handlers with historical tracking
+  const handleNavigateView = (view: GlacierView, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view }])
+      try {
+        window.history.pushState({ concept: 'glacier', view }, '')
+      } catch {
+        // Fallback
+      }
+    }
     setActiveView(view)
   }
 
-  const handleSelectProduct = (product: GlacierProduct) => {
+  const handleSelectProduct = (product: GlacierProduct, pushToHistory = true) => {
+    if (pushToHistory) {
+      setNavHistory((prev) => [...prev, { view: 'pdp', product }])
+      try {
+        window.history.pushState({ concept: 'glacier', view: 'pdp', productId: product.id }, '')
+      } catch {
+        // Fallback
+      }
+    }
     setSelectedProduct(product)
     setActiveView('pdp')
   }
 
+  const handleGoBack = () => {
+    if (navHistory.length > 1) {
+      const updated = [...navHistory]
+      updated.pop()
+      const prevEntry = updated[updated.length - 1]
+      setNavHistory(updated)
+      if (prevEntry.view === 'pdp' && prevEntry.product) {
+        setSelectedProduct(prevEntry.product)
+      }
+      setActiveView(prevEntry.view)
+    } else {
+      setActiveView('home')
+    }
+  }
+
+  // Native browser back button listener
+  useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      if (e.state && e.state.view) {
+        setActiveView(e.state.view)
+      } else {
+        handleGoBack()
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [navHistory])
+
   const handleNavigateCategory = (cat: GlacierCategory) => {
-    if (cat === 'Women') setActiveView('women')
-    else if (cat === 'Men') setActiveView('men')
-    else if (cat === 'Kids') setActiveView('kids')
-    else if (cat === 'Baby') setActiveView('baby')
-    else if (cat === 'Accessories') setActiveView('accessories')
-    else setActiveView('women')
+    if (cat === 'Women') handleNavigateView('women')
+    else if (cat === 'Men') handleNavigateView('men')
+    else if (cat === 'Kids') handleNavigateView('kids')
+    else if (cat === 'Baby') handleNavigateView('baby')
+    else if (cat === 'Accessories') handleNavigateView('accessories')
+    else handleNavigateView('women')
   }
 
   // Quick Add handler
@@ -237,13 +285,14 @@ export const GlacierApp: React.FC<GlacierAppProps> = ({ theme, onToggleTheme }) 
                 onSelectCategory={handleNavigateCategory}
                 onQuickAdd={handleQuickAdd}
                 currency={currency}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'pdp' && (
               <GlacierPDP
                 product={selectedProduct}
-                onBack={() => handleNavigateView('home')}
+                onBack={handleGoBack}
                 onNavigateHome={() => handleNavigateView('home')}
                 onNavigateCategory={handleNavigateCategory}
                 onAddToBag={handleAddToCart}
@@ -255,12 +304,14 @@ export const GlacierApp: React.FC<GlacierAppProps> = ({ theme, onToggleTheme }) 
               <GlacierLookbook
                 onSelectProduct={handleSelectProduct}
                 onNavigateCategory={handleNavigateCategory}
+                onBack={handleGoBack}
               />
             )}
 
             {activeView === 'about' && (
               <GlacierAbout
                 onExploreDrops={() => handleNavigateCategory('Women')}
+                onBack={handleGoBack}
               />
             )}
           </motion.div>

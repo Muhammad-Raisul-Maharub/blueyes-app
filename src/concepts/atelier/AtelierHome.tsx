@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import type { Product, Demographic } from './types'
 import { ATELIER_PRODUCTS } from './atelierData'
-import { ArrowRight, Calendar, Heart, Anchor, MapPin, Sparkles, Scissors } from 'lucide-react'
+import { ArrowRight, Calendar, Heart, Anchor, MapPin, Sparkles, Scissors, X, CheckCircle } from 'lucide-react'
 
 interface AtelierHomeProps {
   onSelectProduct: (product: Product) => void
@@ -22,6 +22,13 @@ export const AtelierHome: React.FC<AtelierHomeProps> = ({
 }) => {
   const [favorites, setFavorites] = useState<Record<string, boolean>>({})
   const [activeTab, setActiveTab] = useState<Demographic>('Women')
+  const [salonModal, setSalonModal] = useState<{
+    title: string
+    subtitle: string
+    details: string[]
+    actionLabel?: string
+    action?: () => void
+  } | null>(null)
 
   const toggleFavorite = (id: string, e: React.MouseEvent) => {
     e.stopPropagation()
@@ -364,11 +371,66 @@ export const AtelierHome: React.FC<AtelierHomeProps> = ({
             “Maison Chattogram: Maritime Heritage Meets Haute Tailoring. Handcrafted in the Port City for patrons across Bangladesh and worldwide.”
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-[10px] font-sans tracking-[0.24em] uppercase text-[var(--color-text-secondary)] mb-8">
-            <span>Flagship: GEC Circle, Nasirabad, Chattogram</span>
+            <button
+              type="button"
+              onClick={() =>
+                setSalonModal({
+                  title: 'Chattogram Flagship Salon',
+                  subtitle: 'GEC Circle, Nasirabad, Chattogram',
+                  details: [
+                    'Private Haute Fitting Chambers with master tailor consultation.',
+                    'Direct access to 22-momme Rajshahi mulberry silks and antique Jamdani archives.',
+                    'Dedicated Valet & private champagne fitting hours by appointment.',
+                    'Hours: Daily 10:30 AM – 09:30 PM (Fitting by RSVP)',
+                  ],
+                  actionLabel: 'Book Salon Fitting',
+                  action: onNavigateToAbout,
+                })
+              }
+              className="hover:text-[var(--color-accent-blue)] hover:underline underline-offset-4 transition-colors cursor-pointer"
+            >
+              Flagship: GEC Circle, Nasirabad, Chattogram
+            </button>
             <span className="text-[var(--color-text-muted)]">•</span>
-            <span>Dhaka Liaison Suite: Gulshan 2</span>
+            <button
+              type="button"
+              onClick={() =>
+                setSalonModal({
+                  title: 'Dhaka Liaison Suite',
+                  subtitle: 'Diplomatic Enclave, Gulshan 2, Dhaka',
+                  details: [
+                    'Private fitting salon for VIP patrons and bridal consults in Dhaka.',
+                    '28-point bespoke measurement session with Traveling Master Tailors.',
+                    'Silk swatch library and custom monogramming preview suite.',
+                    'Hours: Tuesday – Sunday by private appointment',
+                  ],
+                  actionLabel: 'Schedule Private Fitting',
+                  action: onNavigateToAbout,
+                })
+              }
+              className="hover:text-[var(--color-accent-blue)] hover:underline underline-offset-4 transition-colors cursor-pointer"
+            >
+              Dhaka Liaison Suite: Gulshan 2
+            </button>
             <span className="text-[var(--color-text-muted)]">•</span>
-            <span>DHL Global White-Glove Dispatch</span>
+            <button
+              type="button"
+              onClick={() =>
+                setSalonModal({
+                  title: 'DHL Global White-Glove Dispatch',
+                  subtitle: 'Worldwide Insured Luxury Freight',
+                  details: [
+                    'Direct courier delivery to 220+ countries & territories via DHL Express.',
+                    'Custom wooden garment box packaging with archival acid-free tissue wrapping.',
+                    'Full international door-to-door transit insurance and concierge tracking.',
+                    'Same-day express delivery across Chattogram metro & 24h to Dhaka.',
+                  ],
+                })
+              }
+              className="hover:text-[var(--color-accent-blue)] hover:underline underline-offset-4 transition-colors cursor-pointer"
+            >
+              DHL Global White-Glove Dispatch
+            </button>
           </div>
 
           <div className="flex flex-wrap gap-4 justify-center">
@@ -389,6 +451,66 @@ export const AtelierHome: React.FC<AtelierHomeProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Informative Salon / Dispatch Modal */}
+      {salonModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSalonModal(null)}
+        >
+          <div
+            className="w-full max-w-lg bg-[var(--color-card)] border border-[var(--color-border)] p-6 sm:p-8 text-[var(--color-text-primary)] shadow-2xl relative transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setSalonModal(null)}
+              className="absolute top-4 right-4 p-1.5 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="w-12 h-0.5 bg-[var(--color-accent-bronze)] mb-4" />
+            <h3 className="font-serif text-[22px] sm:text-[26px] mb-1">
+              {salonModal.title}
+            </h3>
+            <p className="text-[11px] font-sans uppercase tracking-[0.2em] text-[var(--color-accent-bronze)] mb-6 font-semibold">
+              {salonModal.subtitle}
+            </p>
+            <ul className="space-y-3 mb-8">
+              {salonModal.details.map((d, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-[13px] sm:text-[14px] font-sans text-[var(--color-text-secondary)] leading-relaxed">
+                  <CheckCircle className="w-4 h-4 text-[var(--color-accent-blue)] flex-shrink-0 mt-0.5" />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="flex justify-end gap-3">
+              {salonModal.action && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const act = salonModal.action
+                    setSalonModal(null)
+                    act?.()
+                  }}
+                  className="px-6 py-2.5 bg-[var(--color-text-primary)] text-[var(--color-canvas)] text-[11px] font-sans uppercase tracking-[0.18em] font-semibold hover:bg-[var(--color-accent-blue)] transition-colors cursor-pointer"
+                >
+                  {salonModal.actionLabel || 'Proceed'}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setSalonModal(null)}
+                className="px-5 py-2.5 bg-transparent border border-[var(--color-border)] text-[var(--color-text-secondary)] text-[11px] font-sans uppercase tracking-[0.18em] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

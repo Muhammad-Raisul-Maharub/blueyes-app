@@ -1,11 +1,12 @@
 import React from 'react'
 import type { DistrictProduct, DistrictCategory } from './types'
 import { DISTRICT_PRODUCTS } from './districtData'
-import { Flame, Eye, ArrowRight, Sparkles } from 'lucide-react'
+import { Flame, Eye, ArrowRight, Sparkles, ArrowLeft } from 'lucide-react'
 
 interface DistrictLookbookProps {
   onSelectProduct: (product: DistrictProduct) => void
   onNavigateCategory: (category: DistrictCategory) => void
+  onBack?: () => void
 }
 
 interface LookItem {
@@ -22,6 +23,7 @@ interface LookItem {
 export const DistrictLookbook: React.FC<DistrictLookbookProps> = ({
   onSelectProduct,
   onNavigateCategory,
+  onBack,
 }) => {
   // Curate looks from DISTRICT_PRODUCTS
   const looks: LookItem[] = [
@@ -85,6 +87,25 @@ export const DistrictLookbook: React.FC<DistrictLookbookProps> = ({
 
   return (
     <div className="w-full min-h-screen bg-[#F4F4F6] dark:bg-[#090A0E] text-[#090A0E] dark:text-white pb-28 animate-fadeIn transition-colors duration-200">
+      {/* Top Back Navigation Bar */}
+      {onBack && (
+        <div className="w-full bg-white dark:bg-[#13151D] border-b border-[#E2E8F0] dark:border-[#2C3142] py-2.5 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-1.5 font-mono-tech text-[11px] uppercase tracking-wider text-[#64748B] dark:text-[#8E95A5] hover:text-[#0047FF] dark:hover:text-[#CCFF00] px-3 py-1.5 rounded bg-[#F4F4F6] dark:bg-[#1E2230] border border-[#E2E8F0] dark:border-[#2C3142] transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>RETURN TO PREVIOUS SCREEN</span>
+            </button>
+            <span className="font-mono-tech text-[10px] text-[#64748B] dark:text-[#8E95A5] uppercase tracking-widest hidden sm:inline-block">
+              CAMPAIGN ARCHIVE // RUNWAY
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* 1. Header Banner */}
       <section className="w-full bg-white dark:bg-[#13151D] border-b border-[#E2E8F0] dark:border-[#2C3142] py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">

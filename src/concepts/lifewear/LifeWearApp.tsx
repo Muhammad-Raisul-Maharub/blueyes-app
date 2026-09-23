@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type {
   Currency,
@@ -38,6 +38,9 @@ export const LifeWearApp: React.FC<LifeWearAppProps> = ({ theme, onToggleTheme }
   const [menuOpen, setMenuOpen] = useState(false)
   const [kraftBoxSelected, setKraftBoxSelected] = useState(false)
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [navHistory, setNavHistory] = useState<
+    Array<{ view: LifeWearView; category: LifeWearCategory; product: LifeWearProduct }>
+  >([])
 
   // Initial seeded cart with authentic LifeWear items for instant testing
   const [cart, setCart] = useState<LifeWearCartItem[]>([
@@ -70,22 +73,79 @@ export const LifeWearApp: React.FC<LifeWearAppProps> = ({ theme, onToggleTheme }
     }, 2400)
   }
 
-  // Navigation handlers
+  // Navigation handlers with history tracking
   const handleNavigate = (view: LifeWearView, category?: LifeWearCategory) => {
+    if (view !== currentView || (category && category !== selectedCategory)) {
+      setNavHistory((prev) => [
+        ...prev,
+        { view: currentView, category: selectedCategory, product: selectedProduct },
+      ])
+      try {
+        window.history.pushState({ concept: 'lifewear', view, category }, '')
+      } catch {
+        // Safe fallback in restricted environments
+      }
+    }
     setCurrentView(view)
     if (category) {
       setSelectedCategory(category)
-    } else if (view === 'women' || view === 'men' || view === 'kids' || view === 'baby' || view === 'accessories') {
+    } else if (
+      view === 'women' ||
+      view === 'men' ||
+      view === 'kids' ||
+      view === 'baby' ||
+      view === 'accessories'
+    ) {
       setSelectedCategory(view)
     }
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleSelectProduct = (product: LifeWearProduct) => {
+    setNavHistory((prev) => [
+      ...prev,
+      { view: currentView, category: selectedCategory, product: selectedProduct },
+    ])
+    try {
+      window.history.pushState({ concept: 'lifewear', view: 'pdp', productId: product.id }, '')
+    } catch {
+      // Safe fallback
+    }
     setSelectedProduct(product)
     setCurrentView('pdp')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const handleGoBack = () => {
+    if (navHistory.length > 0) {
+      const prevEntry = navHistory[navHistory.length - 1]
+      setNavHistory((prev) => prev.slice(0, -1))
+      setCurrentView(prevEntry.view)
+      setSelectedCategory(prevEntry.category)
+      setSelectedProduct(prevEntry.product)
+    } else {
+      setCurrentView('home')
+      setSelectedCategory('all')
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Browser popstate integration for native / gesture back navigation
+  useEffect(() => {
+    const onPopState = () => {
+      if (navHistory.length > 0) {
+        const prevEntry = navHistory[navHistory.length - 1]
+        setNavHistory((prev) => prev.slice(0, -1))
+        setCurrentView(prevEntry.view)
+        setSelectedCategory(prevEntry.category)
+        setSelectedProduct(prevEntry.product)
+      } else {
+        setCurrentView('home')
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [navHistory])
 
   // Cart operations
   const handleAddToCart = (
@@ -217,6 +277,8 @@ export const LifeWearApp: React.FC<LifeWearAppProps> = ({ theme, onToggleTheme }
                 currency={currency}
                 onSelectProduct={handleSelectProduct}
                 onQuickAdd={handleQuickAdd}
+                onBack={handleGoBack}
+                onNavigateHome={() => handleNavigate('home', 'all')}
               />
             )}
 
@@ -224,7 +286,7 @@ export const LifeWearApp: React.FC<LifeWearAppProps> = ({ theme, onToggleTheme }
               <LifeWearPDP
                 product={selectedProduct}
                 currency={currency}
-                onBack={() => handleNavigate('home')}
+                onBack={handleGoBack}
                 onAddToCart={handleAddToCart}
               />
             )}
@@ -234,11 +296,12 @@ export const LifeWearApp: React.FC<LifeWearAppProps> = ({ theme, onToggleTheme }
                 currency={currency}
                 onNavigate={handleNavigate}
                 onSelectProduct={handleSelectProduct}
+                onBack={handleGoBack}
               />
             )}
 
             {currentView === 'about' && (
-              <LifeWearAbout onNavigate={handleNavigate} />
+              <LifeWearAbout onNavigate={handleNavigate} onBack={handleGoBack} />
             )}
           </motion.div>
         </AnimatePresence>

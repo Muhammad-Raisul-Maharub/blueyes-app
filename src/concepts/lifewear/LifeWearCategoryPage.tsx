@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Filter, X, Check, SlidersHorizontal } from 'lucide-react'
+import { Filter, X, Check, SlidersHorizontal, ArrowLeft } from 'lucide-react'
 import type { Currency, LifeWearCategory, LifeWearProduct } from './types'
 import { LIFEWEAR_PRODUCTS } from './lifewearData'
 
@@ -9,6 +9,8 @@ interface LifeWearCategoryPageProps {
   currency: Currency
   onSelectProduct: (product: LifeWearProduct) => void
   onQuickAdd: (product: LifeWearProduct) => void
+  onBack?: () => void
+  onNavigateHome?: () => void
 }
 
 export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
@@ -17,6 +19,8 @@ export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
   currency,
   onSelectProduct,
   onQuickAdd,
+  onBack,
+  onNavigateHome,
 }) => {
   // Filter states
   const [selectedAgeBracket, setSelectedAgeBracket] = useState<string>('all')
@@ -129,11 +133,31 @@ export const LifeWearCategoryPage: React.FC<LifeWearCategoryPageProps> = ({
   return (
     <div className="w-full min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)]">
       {/* Category Header Banner */}
-      <div className="w-full bg-[var(--color-surface)] border-b border-[var(--color-border)] py-8 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-[var(--color-surface)] border-b border-[var(--color-border)] py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="flex items-center space-x-2 text-[11px] font-mono text-[var(--color-text-secondary)] mb-1">
-              <span className="uppercase">BLU EYES LIFEWEAR</span>
+            <div className="flex items-center space-x-2 text-[11px] font-mono text-[var(--color-text-secondary)] mb-2">
+              {onBack && (
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="inline-flex items-center space-x-1 text-[#004CE8] dark:text-[#387BFF] hover:underline font-bold cursor-pointer mr-2"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>BACK</span>
+                </button>
+              )}
+              {onNavigateHome ? (
+                <button
+                  type="button"
+                  onClick={onNavigateHome}
+                  className="uppercase hover:text-[#004CE8] transition-colors cursor-pointer"
+                >
+                  BLU EYES LIFEWEAR
+                </button>
+              ) : (
+                <span className="uppercase">BLU EYES LIFEWEAR</span>
+              )}
               <span>/</span>
               <span className="uppercase text-[#004CE8] dark:text-[#387BFF] font-semibold">{category}</span>
             </div>
